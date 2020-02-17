@@ -1,3 +1,3 @@
-# Flutter Course
+# Simply Memorize
 
-A short demo applying basic dart and flutter concepts, as well as extension method, dependency injection and data persistence using sqlite
+Educational application for memorization of simple things as times tables
