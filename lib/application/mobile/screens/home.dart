@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
               children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/images/memorize.png'),
+              child: Image.asset('assets/images/simply_memorize_logo.png'),
             ),
             Row(
               children: <Widget>[
