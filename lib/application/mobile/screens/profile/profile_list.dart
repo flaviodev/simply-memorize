@@ -15,11 +15,13 @@ class ProfileList extends StatefulWidget {
 
 class ProfileListState extends ItemsListState<Profile, ProfileService> {
   ProfileListState()
-      : super(MemorizeApp.injector.get<ProfileService>(), 'Profiles',
-            ProfileForm());
+      : super(
+            service: MemorizeApp.injector.get<ProfileService>(),
+            title: 'Profiles',
+            itemForm: ProfileForm());
 
   @override
   StatelessWidget toItem(Profile profile) {
-    return ListItem(profile.name, '', Icons.monetization_on);
+    return ListItem(title: profile.name, icon: Icons.people);
   }
 }

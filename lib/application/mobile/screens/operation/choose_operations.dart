@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:memorize/application/mobile/screens/countdown/countdown_form.dart';
+import 'package:memorize/application/mobile/screens/operation/answer_operation.dart';
 
-class ChooseTablesScreen extends StatefulWidget {
+class ChooseOperationsScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return ChooseTablesScreenState();
+    return ChooseOperationsScreenState();
   }
 }
 
-class ChooseTablesScreenState extends State<ChooseTablesScreen> {
+class ChooseOperationsScreenState extends State<ChooseOperationsScreen> {
   final List<bool> _selections = List.generate(9, (_) => false);
   bool _trainingButtonEnable = false;
 
@@ -115,7 +115,7 @@ class ChooseTablesScreenState extends State<ChooseTablesScreen> {
                           Navigator.pop(context),
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return CountdownForm();
+                            return AnswerOperationForm();
                           }))
                         }
                     : null,

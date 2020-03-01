@@ -1,7 +1,6 @@
-import 'package:memorize/application/mobile/screens/countdown/countdown_form.dart';
 import 'package:memorize/application/mobile/screens/profile/profile_list.dart';
 import 'package:flutter/material.dart';
-import 'package:memorize/application/mobile/screens/times_tables/choose_tables.dart';
+import 'package:memorize/application/mobile/screens/operation/choose_operations.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -22,8 +21,7 @@ class Home extends StatelessWidget {
             Row(
               children: <Widget>[
                 MenuItem("Profiles", Icons.people, ProfileList()),
-                MenuItem("Countdown", Icons.watch_later, CountdownForm()),
-                MenuItem("Time-Tables", Icons.functions, ChooseTablesScreen()),
+                MenuItem("Time-Tables", Icons.functions, ChooseOperationsScreen()),
               ],
             ),
           ])),

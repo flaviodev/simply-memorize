@@ -26,9 +26,8 @@ class ProfileFormState extends State<ProfileForm> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Editor(
-                _nameController, 'Name', '', Icons.people, TextInputType.text),
-            RaisedButton(
+            Editor(controller:_nameController, label: 'Name', icon: Icons.people, keyboard: TextInputType.text),
+              RaisedButton(
               child: Text('Submit'),
               onPressed: () => _createProfile(context),
             ),

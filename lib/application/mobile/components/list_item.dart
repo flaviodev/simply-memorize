@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ListItem extends StatelessWidget {
-  final String _title;
-  final String _subtitle;
-  final IconData _icon;
+  final String title;
+  final String subtitle;
+  final IconData icon;
 
-  ListItem(this._title, this._subtitle, this._icon);
+  ListItem({this.title, this.icon, this.subtitle = ''});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Icon(this._icon),
-        title: Text(this._title),
-        subtitle: Text(this._subtitle),
+        leading: Icon(this.icon),
+        title: Text(this.title),
+        subtitle: Text(this.subtitle),
       ),
     );
   }

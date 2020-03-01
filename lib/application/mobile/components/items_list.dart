@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 abstract class ItemsListState<T, S extends EntityListingService>
     extends State {
-  final S _service;
+  final S service;
   final String title;
-  final _itemForm;
+  final itemForm;
 
   StatelessWidget toItem(T entity);
 
-  ItemsListState(this._service, this.title, this._itemForm);
+  ItemsListState({this.service, this.title, this.itemForm});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ abstract class ItemsListState<T, S extends EntityListingService>
       ),
       body: FutureBuilder<List<T>>(
         initialData: List(),
-        future: _service.findAll(),
+        future: service.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -56,7 +56,7 @@ abstract class ItemsListState<T, S extends EntityListingService>
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => _itemForm,
+              builder: (context) => itemForm,
             ),
           );
         },
@@ -67,4 +67,3 @@ abstract class ItemsListState<T, S extends EntityListingService>
     );
   }
 }
-
