@@ -1,20 +1,48 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:memorize/application/mobile/components/countdown.dart';
+import 'package:memorize/domain/table/entities/operation.dart';
+import 'package:memorize/domain/table/table_service.dart';
+import 'package:memorize/domain/table/types/operation_type.dart';
+import 'package:memorize/main.dart';
 
 class AnswerOperationForm extends StatefulWidget {
+  final List<int> tables;
+  final List<OperationType> operationsTypes;
+
+  const AnswerOperationForm({Key key, this.tables, this.operationsTypes})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return AnswerOperationFormState();
+    tables.forEach((t) => debugPrint(t.toString()));
+
+    return AnswerOperationFormState(tables, operationsTypes);
   }
 }
 
 class AnswerOperationFormState extends State<AnswerOperationForm>
     with TickerProviderStateMixin {
+  final List<int> tables;
+  final List<OperationType> operationsTypes;
+
+  List<Operation> _operations;
+  int _currentOperationIndex = 0;
+
+  final TableService _service = MemorizeApp.injector.get<TableService>();
+
   AnimationController _animationController;
-  String _operation;
+  Operation _operation;
   FocusNode _focusNode = new FocusNode();
 
   final TextEditingController _answerController = TextEditingController();
+
+  AnswerOperationFormState(this.tables, this.operationsTypes) {
+    _operations =
+        _service.generateOperations(this.operationsTypes, this.tables);
+  }
 
   @override
   void dispose() {
@@ -24,7 +52,21 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
 
   @override
   Widget build(BuildContext context) {
-    if (_operation == null) initOperation("2 x 2 =");
+    if (_operation == null) nextOperation();
+
+    var textField = TextField(
+      controller: _answerController,
+      autofocus: true,
+      focusNode: _focusNode,
+      onSubmitted: (answer) {
+        perform(answer);
+      },
+      style: TextStyle(
+        fontSize: 48.0,
+      ),
+      decoration: InputDecoration(labelText: _operation.toString()),
+      keyboardType: TextInputType.number,
+    );
 
     final scaffold = Scaffold(
       appBar: AppBar(
@@ -36,24 +78,24 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
             CountdownWidget(
                 tricker: this,
                 controller: _animationController,
-                onCompleted: () => Navigator.pop(context)),
+                onCompleted: () => timeOut()),
             TextField(
               controller: _answerController,
               autofocus: true,
               focusNode: _focusNode,
               onSubmitted: (answer) {
-                printResult(answer);
+                perform(answer);
               },
               style: TextStyle(
                 fontSize: 48.0,
               ),
-              decoration: InputDecoration(labelText: _operation),
+              decoration: InputDecoration(labelText: _operation.toString()),
               keyboardType: TextInputType.number,
             ),
             RaisedButton(
               child: Text('Submit'),
               onPressed: () {
-                printResult(_answerController.text);
+                perform(_answerController.text);
               },
             ),
           ],
@@ -66,21 +108,40 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
     return scaffold;
   }
 
-  void printResult(String result) {
-    debugPrint(">>> Result: $result");
+  void perform(String result) {
     _animationController.dispose();
-    initOperation("4 x 4 = ");
+    var entered = int.parse(result);
+    var performed = _operation.perform();
+    var correct = _operation.isCorrect(entered);
+
+    _answerController.text = "$result (${correct ? 'correct' : 'incorrect'})";
+
+    print(
+        "${_operation.toString()} $performed (entered amounnt: $result -> ${correct ? 'correct' : 'incorrect'})");
+    
+    nextOperation();
   }
 
-  void initOperation(String operation) {
+  void nextOperation() {
+    if (_currentOperationIndex >= _operations.length) {
+      Navigator.pop(context);
+    }
+
     _animationController = new AnimationController(
       vsync: this,
       duration: new Duration(seconds: 10),
     );
 
-    _operation = operation;
-    _answerController.text = '';   
+    _operation = _operations[_currentOperationIndex];
+    _currentOperationIndex++;
+
+    _answerController.text = '';
     FocusScope.of(context).requestFocus(_focusNode);
     setState(() {});
+  }
+
+  void timeOut() {
+    print("time out!");
+    nextOperation();
   }
 }
