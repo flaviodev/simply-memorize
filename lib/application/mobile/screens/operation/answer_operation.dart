@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:memorize/application/mobile/components/countdown.dart';
 import 'package:memorize/domain/table/entities/operation.dart';
