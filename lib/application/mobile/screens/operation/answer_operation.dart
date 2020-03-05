@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memorize/application/mobile/components/countdown.dart';
+import 'package:memorize/application/mobile/screens/operation/operation_result_list.dart';
 import 'package:memorize/domain/table/entities/operation.dart';
 import 'package:memorize/domain/table/table_service.dart';
 import 'package:memorize/domain/table/types/operation_type.dart';
@@ -28,6 +29,9 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
   List<Operation> _operations;
   int _currentOperationIndex = 0;
 
+  int _correctAnswers = 0;
+  int _incorrectAnswers = 0;
+
   final TableService _service = MemorizeApp.injector.get<TableService>();
 
   AnimationController _animationController;
@@ -39,32 +43,17 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
   AnswerOperationFormState(this.tables, this.operationsTypes) {
     _operations =
         _service.generateOperations(this.operationsTypes, this.tables);
+    _setOperation();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    if (_animationController.isAnimating) _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_operation == null) nextOperation();
-
-    var textField = TextField(
-      controller: _answerController,
-      autofocus: true,
-      focusNode: _focusNode,
-      onSubmitted: (answer) {
-        perform(answer);
-      },
-      style: TextStyle(
-        fontSize: 48.0,
-      ),
-      decoration: InputDecoration(labelText: _operation.toString()),
-      keyboardType: TextInputType.number,
-    );
-
     final scaffold = Scaffold(
       appBar: AppBar(
         title: Text('Training'),
@@ -75,70 +64,95 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
             CountdownWidget(
                 tricker: this,
                 controller: _animationController,
-                onCompleted: () => timeOut()),
-            TextField(
-              controller: _answerController,
-              autofocus: true,
-              focusNode: _focusNode,
-              onSubmitted: (answer) {
-                perform(answer);
-              },
-              style: TextStyle(
-                fontSize: 48.0,
-              ),
-              decoration: InputDecoration(labelText: _operation.toString()),
-              keyboardType: TextInputType.number,
-            ),
+                onCompleted: () => _timeOut()),
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: _answerController,
+                  autofocus: true,
+                  focusNode: _focusNode,
+                  onSubmitted: (answer) {
+                    _perform(answer);
+                  },
+                  style: TextStyle(
+                    fontSize: 48.0,
+                  ),
+                  decoration: InputDecoration(labelText: _operation.toString()),
+                  keyboardType: TextInputType.number,
+                )),
             RaisedButton(
               child: Text('Submit'),
               onPressed: () {
-                perform(_answerController.text);
+                _perform(_answerController.text);
               },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text("$_correctAnswers Corrects",
+                        style: TextStyle(color: Colors.green))),
+                Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text("$_incorrectAnswers Incorrects",
+                        style: TextStyle(color: Colors.red))),
+              ],
             ),
           ],
         ),
       ),
     );
 
-    _animationController.forward(from: 0.0);
-
     return scaffold;
   }
 
-  void perform(String result) {
+  void _perform(String result) {
     _animationController.dispose();
-    var entered = int.parse(result);
-    var performed = _operation.perform();
-    var correct = _operation.isCorrect(entered);
+    var entered = int.tryParse(result);
 
-    _answerController.text = "$result (${correct ? 'correct' : 'incorrect'})";
+    if(entered != null) 
+      _operation.answer(entered);
 
-    print(
-        "${_operation.toString()} $performed (entered amounnt: $result -> ${correct ? 'correct' : 'incorrect'})");
-    
-    nextOperation();
+    if (_operation.isCorrect())
+      _correctAnswers++;
+    else
+      _incorrectAnswers++;
+
+    _nextOperation();
   }
 
-  void nextOperation() {
+  void _setOperation() {
     if (_currentOperationIndex >= _operations.length) {
       Navigator.pop(context);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => OpeationResultList(items: _operations),
+        ),
+      );
     }
+
+    _operation = _operations[_currentOperationIndex];
+    _currentOperationIndex++;
 
     _animationController = new AnimationController(
       vsync: this,
       duration: new Duration(seconds: 10),
     );
+    _animationController.forward(from: 0.0);
+  }
 
-    _operation = _operations[_currentOperationIndex];
-    _currentOperationIndex++;
-
+  void _nextOperation() {
+    _setOperation();
     _answerController.text = '';
     FocusScope.of(context).requestFocus(_focusNode);
     setState(() {});
   }
 
-  void timeOut() {
+  void _timeOut() {
     print("time out!");
-    nextOperation();
+    _incorrectAnswers++;
+    _nextOperation();
   }
 }

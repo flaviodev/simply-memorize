@@ -1,4 +1,3 @@
-import 'package:memorize/application/mobile/screens/profile/profile_list.dart';
 import 'package:flutter/material.dart';
 import 'package:memorize/application/mobile/screens/operation/choose_operations.dart';
 
@@ -20,7 +19,7 @@ class Home extends StatelessWidget {
             ),
             Row(
               children: <Widget>[
-                MenuItem("Profiles", Icons.people, ProfileList()),
+                //MenuItem("Profiles", Icons.people, ProfileList()),
                 MenuItem("Time-Tables", Icons.functions, ChooseOperationsScreen()),
               ],
             ),

@@ -4,15 +4,24 @@ class Operation {
   final int first;
   final int second;
   final OperationType type;
+  int _answer = -1;
 
   Operation({this.first, this.second, this.type});
+
+  void answer(int value) {
+    _answer = value;
+  }
+
+  int getAnswer() {
+    return _answer;
+  }
 
   int perform() {
     return type.perform(first, second);
   }
 
-  bool isCorrect(int answer) {
-    return answer == perform();
+  bool isCorrect() {
+    return _answer == perform();
   }
 
   @override

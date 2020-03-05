@@ -12,6 +12,7 @@ class CountdownWidget extends AnimatedWidget {
             listenable:
                 StepTween(begin: controller.duration.inSeconds + 1, end: 1)
                     .animate(controller)) {
+
     final animation = listenable as Animation;
     animation.addStatusListener((state) => {
           if (state == AnimationStatus.completed)
