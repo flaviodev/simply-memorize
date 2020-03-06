@@ -1,0 +1,63 @@
+{
+    "verion" : "202003060025",
+    "groups": [
+        {
+            "id": "eb98c449-2a46-4c8f-9b14-edd4bcf4a3f3",
+            "name": "Capitals",
+            "subGroups": [
+                {
+                    "id": "2367721f-7be4-4985-8265-706cf4c8d184",
+                    "name": "Brazil States",
+                    "choiceList": [
+                        {
+                            "key": "Acre",
+                            "value": "Rio Branco"
+                        },
+                        {
+                            "key": "Alagoas",
+                            "value": "Maceió"
+                        },
+                        {
+                            "key": "Amapá",
+                            "value": "Macapá"
+                        },
+                        {
+                            "key": "Amazonas",
+                            "value": "Manaus"
+                        },
+                        {
+                            "key": "Ceará",
+                            "value": "Fortaleza"
+                        }
+                    ]
+                },
+                {
+                    "id": "e130cea6-947a-4720-aa3a-9d4ed02014e8",
+                    "name": "South America",
+                    "choiceList": [
+                        {
+                            "key": "Argentina",
+                            "value": "Buenos Aires"
+                        },
+                        {
+                            "key": "Bolívia",
+                            "value": "La Paz"
+                        },
+                        {
+                            "key": "Brasil",
+                            "value": "Brasília"
+                        },
+                        {
+                            "key": "Chile",
+                            "value": "Santiago"
+                        },
+                        {
+                            "key": "Colômbia",
+                            "value": "Bogotá"
+                        }
+                    ]
+                }                
+            ]
+        }
+    ]
+}
