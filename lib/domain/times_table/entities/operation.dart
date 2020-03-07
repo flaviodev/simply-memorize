@@ -1,4 +1,4 @@
-import 'package:memorize/domain/table/types/operation_type.dart';
+import 'package:memorize/domain/times_tables/types/operation_type.dart';
 
 class Operation {
   final int first;

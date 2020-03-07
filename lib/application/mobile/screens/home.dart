@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
             Row(
               children: <Widget>[
                 //MenuItem("Profiles", Icons.people, ProfileList()),
-                MenuItem("Time-Tables", Icons.functions, ChooseOperationsScreen()),
+                MenuItem("Times-Tables", Icons.functions, ChooseOperationsScreen()),
               ],
             ),
           ])),

@@ -1,11 +1,11 @@
-class ChoiceQuestion {
+class QuizQuestion {
   final String id;
   final String key;
-  final List<String> alternatives;
+  final List<String> options;
   final String expectedAnswer;
   String _enteredAnswer = "";
 
-  ChoiceQuestion({this.id, this.key, this.alternatives, this.expectedAnswer});
+  QuizQuestion({this.id, this.key, this.options, this.expectedAnswer});
 
   void setAnswer(String value) {
     _enteredAnswer = value;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:memorize/application/mobile/components/countdown.dart';
 import 'package:memorize/application/mobile/screens/operation/operation_result_list.dart';
-import 'package:memorize/domain/table/entities/operation.dart';
-import 'package:memorize/domain/table/table_service.dart';
-import 'package:memorize/domain/table/types/operation_type.dart';
+import 'package:memorize/domain/times_tables/entities/operation.dart';
+import 'package:memorize/domain/times_tables/times_tables_service.dart';
+import 'package:memorize/domain/times_tables/types/operation_type.dart';
 import 'package:memorize/main.dart';
 
 class AnswerOperationForm extends StatefulWidget {
@@ -32,7 +32,7 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
   int _correctAnswers = 0;
   int _incorrectAnswers = 0;
 
-  final TableService _service = MemorizeApp.injector.get<TableService>();
+  final TimesTablesService _service = MemorizeApp.injector.get<TimesTablesService>();
 
   AnimationController _animationController;
   Operation _operation;
@@ -113,7 +113,7 @@ class AnswerOperationFormState extends State<AnswerOperationForm>
     var entered = int.tryParse(result);
 
     if(entered != null) 
-      _operation.answer(entered);
+      _operation.setAnswer(entered);
 
     if (_operation.isCorrect())
       _correctAnswers++;

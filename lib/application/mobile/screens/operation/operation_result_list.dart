@@ -1,5 +1,5 @@
 import 'package:memorize/application/mobile/components/result_list.dart';
-import 'package:memorize/domain/table/entities/operation.dart';
+import 'package:memorize/domain/times_tables/entities/operation.dart';
 import 'package:flutter/material.dart';
 
 class OpeationResultList extends StatefulWidget {
@@ -36,14 +36,13 @@ class OperationResultItem extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: Icon(this.icon),
-        title: Text("${operation.toString()} ${operation.getAnswer() != -1 ? operation.getAnswer() : 'Not entered'}",
+        title: Text("${operation.getAnsweredOperation()}",
             style: TextStyle(
                 color: operation.isCorrect() ? Colors.green : Colors.red)),
         subtitle: Text(
             operation.isCorrect()
-                ? ''
-                : "Correct answer: ${operation.perform()}",
-            style: TextStyle(color: Colors.red)),
+                ? '' :  "Correct answer: ${operation.perform()}",
+            style: TextStyle(color: Colors.red))
       ),
     );
   }

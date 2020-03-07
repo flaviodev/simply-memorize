@@ -1,4 +1,4 @@
-import 'package:memorize/domain/table/entities/operation.dart';
+import 'package:memorize/domain/times_tables/entities/operation.dart';
 
 enum OperationType { addition, subtraction, multiplication, division }
 

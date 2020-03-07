@@ -1,4 +1,4 @@
-import 'package:memorize/domain/choice/entities/sub_group.dart';
+import 'package:memorize/domain/quiz/entities/sub_group.dart';
 
 class Group {
   final String id;

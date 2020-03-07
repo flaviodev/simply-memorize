@@ -1,7 +1,7 @@
 import 'package:memorize/application/config/database/db_provider.dart';
 import 'package:memorize/domain/profile/profile_repository.dart';
 import 'package:memorize/domain/profile/profile_service.dart';
-import 'package:memorize/domain/table/table_service.dart';
+import 'package:memorize/domain/times_tables/times_tables_service.dart';
 import 'package:memorize/resources/repositories/profile_repository_db.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -21,7 +21,7 @@ class DependencyInjection {
         isSingleton: true);
 
     // Table
-    injector.map<TableService>((i) => TableService(), isSingleton: true);
+    injector.map<TimesTablesService>((i) => TimesTablesService(), isSingleton: true);
 
     return injector;
   }

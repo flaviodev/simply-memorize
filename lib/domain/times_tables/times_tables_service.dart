@@ -1,7 +1,7 @@
-import 'package:memorize/domain/table/entities/operation.dart';
-import 'package:memorize/domain/table/types/operation_type.dart';
+import 'package:memorize/domain/times_tables/entities/operation.dart';
+import 'package:memorize/domain/times_tables/types/operation_type.dart';
 
-class TableService {
+class TimesTablesService {
   List<Operation> generateOperations(
       List<OperationType> types, List<int> tables) {
     var operations = List<Operation>();
